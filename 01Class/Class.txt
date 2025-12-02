@@ -1,0 +1,578 @@
+
+📘 Konsep Umum
+Class = Blueprint/Rencana Seperti rencana rumah atau gambar desain mobil. Belum nyata, hanya rancangan.
+
+Object = Barang nyata hasil cetakan blueprint Misalnya rumah yang sudah dibangun atau mobil yang sudah keluar dari pabrik.
+
+Function/Method = Aksi yang bisa dilakukan oleh object Contohnya pintu bisa dibuka, mobil bisa dijalankan, lampu bisa dinyalakan.
+
+🏠 Analogi Sehari-hari
+Class = Rencana rumah Object = Rumah yang dibangun Function = Pintu bisa dibuka, jendela bisa ditutup
+
+Class = Desain mobil Object = Mobil Toyota Avanza yang keluar dari pabrik Function = Mobil bisa dinyalakan, klakson bisa dibunyikan
+
+Class = Resep kue Object = Kue coklat yang sudah jadi Function = Kue bisa dipotong, bisa dimakan
+
+Class = Rencana kursi Object = Kursi kayu di ruang tamu Function = Kursi bisa diduduki, bisa digeser
+
+Class = Desain smartphone Object = HP Samsung Galaxy yang ada di tangan Function = HP bisa menelpon, bisa memotret
+
+🎨 Konsep Function di p5.js
+Function = aksi/alat kerja Di p5.js, function dipakai untuk melakukan sesuatu, misalnya menggambar lingkaran, memberi warna, atau menjalankan logika.
+
+Contoh analogi:
+
+Function ellipse() = “alat untuk menggambar lingkaran di kanvas.”
+
+Function fill() = “alat untuk memberi warna isi bentuk.”
+
+Function line() = “alat untuk menggambar garis.”
+
+👉 Jadi function di p5.js seperti peralatan tukang gambar: pensil, kuas, penggaris.
+
+🏗️ Konsep Class di p5.js
+Class = blueprint/rencana Kita bisa membuat class untuk mendefinisikan “jenis benda” yang ingin digambar atau dipakai.
+
+Object = hasil nyata dari class Misalnya kita punya class Ball, lalu kita buat object bola1, bola2.
+
+Method (function di dalam class) = aksi yang bisa dilakukan oleh object. Misalnya bola bisa move(), bisa display().
+
+👉 Analogi:
+
+Class = “rencana bola”
+
+Object = “bola merah di layar”
+
+Method = “bola bisa bergerak ke kanan, bisa ditampilkan di layar”
+
+🖼️ Contoh sederhana p5.js
+javascript
+// Membuat class Ball
+class Ball {
+  constructor(x, y, r) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+  }
+
+  // Method untuk menampilkan bola
+  display() {
+    ellipse(this.x, this.y, this.r, this.r);
+  }
+
+  // Method untuk menggerakkan bola
+  move() {
+    this.x += random(-2, 2);
+    this.y += random(-2, 2);
+  }
+}
+
+let bola;
+
+function setup() {
+  createCanvas(400, 400);
+  bola = new Ball(200, 200, 50); // object dari class Ball
+}
+
+function draw() {
+  background(220);
+  bola.move();     // bola bergerak
+  bola.display();  // bola ditampilkan
+}
+
+📝 Latihan & Penyelesaian
+1. Soal
+Buat sebuah class Kotak yang bisa digambar di layar. Kotak memiliki properti x, y, dan ukuran. Tambahkan method display() untuk menampilkan kotak.
+
+Penyelesaian:
+
+javascript
+class Kotak {
+  constructor(x, y, ukuran) {
+    this.x = x;
+    this.y = y;
+    this.ukuran = ukuran;
+  }
+
+  display() {
+    rect(this.x, this.y, this.ukuran, this.ukuran);
+  }
+}
+
+let k;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(100, 100, 50);
+}
+
+function draw() {
+  background(220);
+  k.display();
+}
+2. Soal
+Tambahkan method moveRight() pada class Kotak agar kotak bergerak ke kanan setiap frame.
+
+Penyelesaian:
+
+javascript
+class Kotak {
+  constructor(x, y, ukuran) {
+    this.x = x;
+    this.y = y;
+    this.ukuran = ukuran;
+  }
+
+  display() {
+    rect(this.x, this.y, this.ukuran, this.ukuran);
+  }
+
+  moveRight() {
+    this.x += 2;
+  }
+}
+
+let k;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(50, 200, 50);
+}
+
+function draw() {
+  background(220);
+  k.moveRight();
+  k.display();
+}
+3. Soal
+Buat class Bola dengan properti x, y, r. Tambahkan method move() agar bola bergerak acak, dan display() untuk menampilkan bola.
+
+Penyelesaian:
+
+javascript
+class Bola {
+  constructor(x, y, r) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+  }
+
+  move() {
+    this.x += random(-2, 2);
+    this.y += random(-2, 2);
+  }
+
+  display() {
+    ellipse(this.x, this.y, this.r, this.r);
+  }
+}
+
+let b;
+
+function setup() {
+  createCanvas(400, 400);
+  b = new Bola(200, 200, 40);
+}
+
+function draw() {
+  background(220);
+  b.move();
+  b.display();
+}
+4. Soal
+Buat 3 object dari class Bola dengan posisi berbeda, lalu tampilkan semuanya di layar.
+
+Penyelesaian:
+
+javascript
+let bola1, bola2, bola3;
+
+function setup() {
+  createCanvas(400, 400);
+  bola1 = new Bola(100, 100, 30);
+  bola2 = new Bola(200, 200, 40);
+  bola3 = new Bola(300, 150, 50);
+}
+
+function draw() {
+  background(220);
+  bola1.move(); bola1.display();
+  bola2.move(); bola2.display();
+  bola3.move(); bola3.display();
+}
+5. Soal
+Gabungkan class Kotak dan Bola dalam satu sketch. Kotak bergerak ke kanan, bola bergerak acak.
+
+Penyelesaian:
+
+javascript
+let k, b;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(50, 300, 60);
+  b = new Bola(200, 100, 40);
+}
+
+function draw() {
+  background(220);
+
+  k.moveRight();
+  k.display();
+
+  b.move();
+  b.display();
+}
+🎯 Ringkasan
+Class = blueprint (Kotak, Bola)
+
+Object = hasil nyata (kotak1, bola1, dll.)
+
+Method/Function = aksi (moveRight, move, display)
+
+📝 Latihan & Penyelesaian
+1. Soal
+Buat sebuah class Kotak yang bisa digambar di layar. Kotak memiliki properti x, y, dan ukuran. Tambahkan method display() untuk menampilkan kotak.
+
+Penyelesaian:
+
+javascript
+class Kotak {
+  constructor(x, y, ukuran) {
+    this.x = x;
+    this.y = y;
+    this.ukuran = ukuran;
+  }
+
+  display() {
+    rect(this.x, this.y, this.ukuran, this.ukuran);
+  }
+}
+
+let k;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(100, 100, 50);
+}
+
+function draw() {
+  background(220);
+  k.display();
+}
+2. Soal
+Tambahkan method moveRight() pada class Kotak agar kotak bergerak ke kanan setiap frame.
+
+Penyelesaian:
+
+javascript
+class Kotak {
+  constructor(x, y, ukuran) {
+    this.x = x;
+    this.y = y;
+    this.ukuran = ukuran;
+  }
+
+  display() {
+    rect(this.x, this.y, this.ukuran, this.ukuran);
+  }
+
+  moveRight() {
+    this.x += 2;
+  }
+}
+
+let k;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(50, 200, 50);
+}
+
+function draw() {
+  background(220);
+  k.moveRight();
+  k.display();
+}
+3. Soal
+Buat class Bola dengan properti x, y, r. Tambahkan method move() agar bola bergerak acak, dan display() untuk menampilkan bola.
+
+Penyelesaian:
+
+javascript
+class Bola {
+  constructor(x, y, r) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+  }
+
+  move() {
+    this.x += random(-2, 2);
+    this.y += random(-2, 2);
+  }
+
+  display() {
+    ellipse(this.x, this.y, this.r, this.r);
+  }
+}
+
+let b;
+
+function setup() {
+  createCanvas(400, 400);
+  b = new Bola(200, 200, 40);
+}
+
+function draw() {
+  background(220);
+  b.move();
+  b.display();
+}
+4. Soal
+Buat 3 object dari class Bola dengan posisi berbeda, lalu tampilkan semuanya di layar.
+
+Penyelesaian:
+
+javascript
+let bola1, bola2, bola3;
+
+function setup() {
+  createCanvas(400, 400);
+  bola1 = new Bola(100, 100, 30);
+  bola2 = new Bola(200, 200, 40);
+  bola3 = new Bola(300, 150, 50);
+}
+
+function draw() {
+  background(220);
+  bola1.move(); bola1.display();
+  bola2.move(); bola2.display();
+  bola3.move(); bola3.display();
+}
+5. Soal
+Gabungkan class Kotak dan Bola dalam satu sketch. Kotak bergerak ke kanan, bola bergerak acak.
+
+Penyelesaian:
+
+javascript
+let k, b;
+
+function setup() {
+  createCanvas(400, 400);
+  k = new Kotak(50, 300, 60);
+  b = new Bola(200, 100, 40);
+}
+
+function draw() {
+  background(220);
+
+  k.moveRight();
+  k.display();
+
+  b.move();
+  b.display();
+}
+🎯 Ringkasan
+Class = blueprint (Kotak, Bola)
+
+Object = hasil nyata (kotak1, bola1, dll.)
+
+Method/Function = aksi (moveRight, move, display)
+
+Struktur yang kamu buat itu terdiri dari:
+
+Class Tree
+
+Blueprint untuk pohon biner.
+
+Punya properti root (akar pohon).
+
+Punya method AddNode() → aksi untuk menambahkan node ke pohon.
+
+Class Node
+
+Blueprint untuk simpul pohon.
+
+Punya properti value (nilai yang disimpan), left (anak kiri), dan right (anak kanan).
+
+👉 Jadi benar: AddNode adalah method milik Tree, karena logika menambah node ke pohon memang tanggung jawab class Tree. Sedangkan class Node hanya mendefinisikan bentuk simpulnya saja.
+
+Visualisasi sederhana
+Kode
+Tree
+ └── root (Node)
+       ├── left (Node)
+       └── right (Node)
+Tree = wadah besar
+
+Node = isi simpul
+
+AddNode() = cara menaruh simpul ke dalam pohon
+
+Kalau mau lebih jelas, bisa kita kembangkan contoh tadi:
+
+javascript
+var tree;
+
+function setup(){
+    tree = new Tree();
+    tree.AddNode(new Node(5));   // root
+    tree.AddNode(new Node(3));   // anak kiri
+    tree.AddNode(new Node(7));   // anak kanan
+    console.log(tree);
+}
+
+function Tree(){
+    this.root = null;
+}
+
+Tree.prototype.AddNode = function(n){
+    if (this.root == null){
+        this.root = n;
+    } else {
+        this._AddNode(this.root, n);
+    }
+}
+
+Tree.prototype._AddNode = function(current, n){
+    if (n.value < current.value){
+        if (current.left == null){
+            current.left = n;
+        } else {
+            this._AddNode(current.left, n);
+        }
+    } else {
+        if (current.right == null){
+            current.right = n;
+        } else {
+            this._AddNode(current.right, n);
+        }
+    }
+}
+
+function Node(val){
+    this.value = val;
+    this.left = null;
+    this.right = null;
+}
+Hasilnya:
+
+Node 5 jadi root.
+
+Node 3 masuk ke kiri.
+
+Node 7 masuk ke kanan.
+
+📘 Konsep Search di Binary Tree
+Mulai dari root.
+
+Bandingkan nilai yang dicari dengan nilai node saat ini:
+
+Jika sama → ketemu.
+
+Jika lebih kecil → lanjut ke anak kiri.
+
+Jika lebih besar → lanjut ke anak kanan.
+
+Jika sampai ke node null → berarti nilai tidak ada di pohon.
+
+🖥️ Implementasi Search
+Tambahkan method search(val) ke dalam class Tree:
+
+javascript
+Tree.prototype.search = function(val){
+    return this._search(this.root, val);
+}
+
+Tree.prototype._search = function(current, val){
+    if (current == null){
+        return null; // tidak ketemu
+    }
+
+    if (val == current.value){
+        return current; // ketemu
+    } else if (val < current.value){
+        return this._search(current.left, val); // cari ke kiri
+    } else {
+        return this._search(current.right, val); // cari ke kanan
+    }
+}
+🏗️ Contoh Penggunaan
+javascript
+var tree;
+
+function setup(){
+    tree = new Tree();
+    tree.AddNode(new Node(5));
+    tree.AddNode(new Node(3));
+    tree.AddNode(new Node(7));
+    tree.AddNode(new Node(2));
+    tree.AddNode(new Node(4));
+
+    let hasil = tree.search(4);
+    if (hasil != null){
+        console.log("Ketemu:", hasil.value);
+    } else {
+        console.log("Tidak ada");
+    }
+}
+Output
+Kode
+Ketemu: 4
+Kalau kamu coba tree.search(10), hasilnya:
+
+Kode
+Tidak ada
+🎯 Ringkasan
+Tree = class utama, punya root.
+
+Node = simpul dengan value, left, right.
+
+AddNode() = method untuk menambah node sesuai aturan kiri/kanan.
+
+search(val) = method untuk mencari node dengan nilai tertentu.
+
+📘 Kenapa ada 2 class (Tree dan Node)?
+Tree = wadah besar, hanya ada satu objek utama (tree) yang menyimpan keseluruhan struktur.
+
+Node = simpul pohon, jumlahnya bisa bertambah banyak sesuai data yang kita masukkan.
+
+Jadi:
+
+Kita definisikan class Tree sekali, karena hanya ada satu blueprint pohon.
+
+Kita definisikan class Node sekali, karena setiap kali kita ingin menambah data, kita buat object baru dari blueprint Node.
+
+🏗️ Bagaimana cara kerjanya?
+Tree punya properti root.
+
+Awalnya null.
+
+Saat kita tambahkan node pertama, dia jadi root.
+
+Node adalah blueprint simpul.
+
+Setiap kali kita new Node(val), kita bikin simpul baru dengan nilai val.
+
+Node ini bisa ditempatkan di kiri atau kanan sesuai aturan binary tree.
+
+Semua node yang dibuat disimpan di dalam Tree, karena Tree adalah variabel utama yang mengorganisir mereka.
+
+🔍 Analogi sehari-hari
+Tree = lemari besar.
+
+Node = laci di dalam lemari.
+
+Kita hanya punya satu lemari utama (Tree), tapi bisa menambah banyak laci (Node).
+
+Method AddNode() = cara memasukkan laci baru ke posisi yang tepat (kiri/kanan).
+
+✨ Kesimpulan
+Class Tree dan Node didefinisikan sekali di awal sebagai blueprint.
+
+Object tree dibuat dari class Tree → ini variabel utama.
+
+Object Node dibuat berkali-kali sesuai jumlah data → mereka disimpan dan diorganisir oleh tree.
+
+

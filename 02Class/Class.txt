@@ -1,0 +1,843 @@
+
+🧩 Tahapan Belajar Binary Tree di p5.js
+1. Dasar Class & Prototype di JavaScript
+Pelajari cara membuat constructor function (function Node(val) { ... }).
+
+Pahami bahwa this menunjuk ke objek yang sedang dibuat.
+
+Kenali bagaimana prototype dipakai untuk menambahkan method (Node.prototype.search = function(val) { ... }).
+
+Latihan: buat class sederhana seperti Person dengan method sayHello.
+
+2. Konsep Node dalam Struktur Data
+Node adalah unit dasar dalam tree: punya value, left, dan right.
+
+Visualisasi: bayangkan node seperti lingkaran dengan dua cabang (kiri & kanan).
+
+Latihan: buat 3 node manual, hubungkan root.left dan root.right.
+
+3. Membuat Method pada Node
+addNode(n): logika untuk menaruh node baru di kiri atau kanan sesuai nilai.
+
+search(val): mencari nilai dengan traversal rekursif.
+
+visit(): melakukan in-order traversal (kiri → root → kanan).
+
+Latihan: tambahkan beberapa angka ke root, lalu coba search() dan lihat hasil visit().
+
+4. Membuat Class Tree
+Tree adalah wrapper yang punya root.
+
+Method:
+
+addValue(val) → buat node baru, masukkan ke root.
+
+traverse() → panggil visit() dari root.
+
+search(val) → panggil search() dari root.
+
+Latihan: buat tree kosong, tambahkan angka, lalu traverse.
+
+5. Integrasi dengan p5.js
+Fungsi setup() dipakai untuk inisialisasi.
+
+noCanvas() → karena kita hanya pakai console log, bukan gambar.
+
+Loop for → menambahkan 10 angka random ke tree.
+
+tree.traverse() → menampilkan semua angka secara urut.
+
+tree.search(10) → mencari angka 10, hasilnya null atau node.
+
+6. Memahami Output Script Akhir
+console.log(tree) → menampilkan struktur tree (root, left, right).
+
+tree.traverse() → menampilkan angka dalam urutan ascending.
+
+tree.search(10) → cek apakah angka 10 ada di tree.
+
+Insight: kamu sudah punya Binary Search Tree yang bisa menambah, mencari, dan menampilkan data.
+
+===========================================
+
+🧩 Penjelasan Tahap 1: Dasar Class & Prototype di JavaScript
+1. Constructor Function
+Sebelum ada sintaks class modern, JavaScript menggunakan function untuk membuat objek.
+
+Contoh:
+
+js
+function Person(name) {
+  this.name = name;
+}
+→ this.name akan menjadi properti milik setiap objek yang dibuat dari Person.
+
+2. Membuat Objek dengan new
+Kata kunci new dipakai untuk membuat instance dari constructor function.
+
+js
+let p1 = new Person("Edy");
+console.log(p1.name); // "Edy"
+3. Prototype
+Semua function di JS punya properti prototype.
+
+Method ditambahkan ke prototype agar dibagi bersama oleh semua instance.
+
+js
+Person.prototype.sayHello = function() {
+  console.log("Hello, my name is " + this.name);
+};
+p1.sayHello(); // "Hello, my name is Edy"
+4. Kenapa Prototype Penting
+Jika method ditaruh langsung di constructor, setiap objek punya copy sendiri → boros memori.
+
+Dengan prototype, semua objek berbagi satu method.
+
+5. Sintaks Modern (Class)
+ES6 memperkenalkan class sebagai cara lebih rapi:
+
+js
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHello() {
+    console.log("Hello, my name is " + this.name);
+  }
+}
+Di balik layar, ini tetap menggunakan prototype.
+
+🎯 5 Contoh Soal Latihan
+Constructor Function Dasar Buat constructor function Car dengan properti brand dan year. Buat 2 objek mobil berbeda.
+
+Menambahkan Method ke Prototype Tambahkan method getAge() ke prototype Car yang menghitung umur mobil dari tahun sekarang.
+
+Membandingkan Constructor vs Class Tulis ulang constructor Car tadi menggunakan sintaks class. Pastikan hasilnya sama.
+
+Prototype Chain Buat constructor Animal dengan method speak(). Lalu buat constructor Dog yang mewarisi dari Animal. Tunjukkan bagaimana Dog bisa memanggil speak().
+
+Latihan Praktis Buat constructor Rectangle dengan properti width dan height. Tambahkan method area() di prototype untuk menghitung luas. Buat 3 objek rectangle dengan ukuran berbeda dan tampilkan luasnya.
+
+
+Tahap 2: Konsep Node dalam Struktur Data. Ini inti dari memahami bagaimana Binary Tree bekerja, karena semua dimulai dari Node.
+
+🧩 Konsep Node dalam Struktur Data
+1. Apa itu Node?
+Node adalah unit dasar dalam struktur data seperti linked list atau tree.
+
+Setiap node biasanya punya:
+
+Value → data yang disimpan (misalnya angka, string, objek).
+
+Pointer/Reference → hubungan ke node lain (misalnya left dan right pada tree).
+
+2. Node dalam Binary Tree
+Binary Tree adalah struktur data di mana setiap node punya maksimal 2 anak:
+
+left → anak kiri
+
+right → anak kanan
+
+Contoh:
+
+Kode
+     10
+    /  \
+   5    15
+Node 10 adalah root.
+
+Node 5 adalah anak kiri.
+
+Node 15 adalah anak kanan.
+
+3. Node di Script Shiffman
+js
+function Node(val) {
+  this.value = val;
+  this.left = null;
+  this.right = null;
+}
+this.value → menyimpan angka.
+
+this.left dan this.right → awalnya null, nanti bisa diisi node lain.
+
+4. Kenapa Node Penting
+Node adalah bangunan dasar dari tree.
+
+Dengan node, kita bisa:
+
+Menambah data (addNode)
+
+Mencari data (search)
+
+Menelusuri data (visit)
+
+5. Visualisasi Node
+Bayangkan node seperti lingkaran dengan 2 cabang:
+
+Kode
+   [ value ]
+   /      \
+ left    right
+Jika left kosong → null.
+
+Jika right kosong → null.
+
+🎯 5 Contoh Soal Latihan Node
+Buat constructor Node dengan properti value, next. Gunakan untuk membuat linked list sederhana dengan 3 node berisi angka 1 → 2 → 3.
+
+Buat constructor Node untuk Binary Tree dengan properti value, left, right. Buat root dengan nilai 10, lalu tambahkan anak kiri 5 dan anak kanan 15 secara manual.
+
+Tambahkan method print() pada prototype Node yang menampilkan this.value. Buat 3 node dan panggil print() masing-masing.
+
+Buat function countChildren(node) yang menerima sebuah node dan mengembalikan jumlah anak (0, 1, atau 2).
+
+Buat function isLeaf(node) yang mengembalikan true jika node tidak punya anak (left == null && right == null), dan false jika punya anak.
+
+
+contoh soal tahap 2 (Node dalam Struktur Data) satu per satu dengan kode dan penjelasan.
+
+1. Linked List Sederhana (1 → 2 → 3)
+js
+// Constructor Node untuk Linked List
+function Node(value) {
+  this.value = value;
+  this.next = null;
+}
+
+// Membuat 3 node
+let node1 = new Node(1);
+let node2 = new Node(2);
+let node3 = new Node(3);
+
+// Menghubungkan node
+node1.next = node2;
+node2.next = node3;
+
+// Traversal Linked List
+let current = node1;
+while (current != null) {
+  console.log(current.value);
+  current = current.next;
+}
+// Output: 1, 2, 3
+👉 Node di sini hanya punya satu pointer (next) untuk linked list.
+
+2. Binary Tree Manual (Root 10, Left 5, Right 15)
+js
+// Constructor Node untuk Binary Tree
+function Node(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
+}
+
+// Membuat root dan anak
+let root = new Node(10);
+root.left = new Node(5);
+root.right = new Node(15);
+
+console.log(root);
+// Output: Node { value: 10, left: Node { value: 5 }, right: Node { value: 15 } }
+👉 Node di tree punya dua pointer (left dan right).
+
+3. Method print() di Prototype
+js
+function Node(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
+}
+
+// Tambahkan method ke prototype
+Node.prototype.print = function() {
+  console.log(this.value);
+};
+
+// Buat 3 node
+let a = new Node(100);
+let b = new Node(200);
+let c = new Node(300);
+
+// Panggil print()
+a.print(); // 100
+b.print(); // 200
+c.print(); // 300
+👉 Semua node berbagi method print() lewat prototype.
+
+4. Function countChildren(node)
+js
+function countChildren(node) {
+  let count = 0;
+  if (node.left != null) count++;
+  if (node.right != null) count++;
+  return count;
+}
+
+// Contoh
+let root = new Node(10);
+root.left = new Node(5);
+root.right = new Node(15);
+
+console.log(countChildren(root));     // 2
+console.log(countChildren(root.left)); // 0
+👉 Menghitung jumlah anak node (0, 1, atau 2).
+
+5. Function isLeaf(node)
+js
+function isLeaf(node) {
+  return node.left == null && node.right == null;
+}
+
+// Contoh
+let root = new Node(10);
+root.left = new Node(5);
+root.right = new Node(15);
+
+console.log(isLeaf(root));      // false (punya anak)
+console.log(isLeaf(root.left)); // true (tidak punya anak)
+👉 Leaf = node tanpa anak.
+
+📊 Ringkasan
+Linked List → Node dengan next.
+
+Binary Tree → Node dengan left dan right.
+
+Prototype Method → Semua node bisa print().
+
+countChildren() → Hitung jumlah anak.
+
+isLeaf() → Cek apakah node adalah daun.
+
+Tahap 3: Membuat Method pada Node. Ini bagian seru karena Node bukan hanya wadah data, tapi juga punya perilaku lewat method.
+
+🧩 Tahap 3: Membuat Method pada Node
+1. Kenapa Node Butuh Method?
+Node menyimpan data (value) dan relasi (left, right).
+
+Supaya tree bisa hidup (bisa menambah, mencari, menelusuri), kita butuh method:
+
+addNode() → menambahkan node baru ke posisi yang tepat.
+
+search() → mencari nilai tertentu.
+
+visit() → menelusuri tree (traversal).
+
+2. Contoh Method pada Node
+a. addNode(n)
+Menentukan apakah node baru masuk ke kiri atau kanan.
+
+js
+Node.prototype.addNode = function(n) {
+  if (n.value < this.value) {
+    if (this.left == null) {
+      this.left = n;
+    } else {
+      this.left.addNode(n);
+    }
+  } else if (n.value > this.value) {
+    if (this.right == null) {
+      this.right = n;
+    } else {
+      this.right.addNode(n);
+    }
+  }
+};
+👉 Rekursif: kalau anak kiri/kanan sudah ada, panggil lagi addNode di anak tersebut.
+
+b. search(val)
+Mencari nilai di tree.
+
+js
+Node.prototype.search = function(val) {
+  if (this.value == val) {
+    return this;
+  } else if (val < this.value && this.left != null) {
+    return this.left.search(val);
+  } else if (val > this.value && this.right != null) {
+    return this.right.search(val);
+  }
+  return null;
+};
+👉 Rekursif: turun ke kiri atau kanan sesuai nilai.
+
+c. visit()
+Traversal in-order (kiri → root → kanan).
+
+js
+Node.prototype.visit = function() {
+  if (this.left != null) {
+    this.left.visit();
+  }
+  console.log(this.value);
+  if (this.right != null) {
+    this.right.visit();
+  }
+};
+👉 Hasil traversal akan urut dari kecil ke besar.
+
+3. Ilustrasi Traversal
+Misal tree:
+
+Kode
+       10
+      /  \
+     5    15
+visit() → output: 5, 10, 15.
+
+4. Latihan Soal Method Node
+Buat method minValue() pada Node yang mencari nilai terkecil di subtree.
+
+Buat method maxValue() pada Node yang mencari nilai terbesar di subtree.
+
+Buat method height() yang menghitung tinggi tree dari node tersebut.
+
+Buat method preOrder() traversal (root → left → right).
+
+Buat method postOrder() traversal (left → right → root).
+
+5. Contoh Jawaban Singkat
+js
+Node.prototype.minValue = function() {
+  if (this.left == null) return this.value;
+  return this.left.minValue();
+};
+
+Node.prototype.maxValue = function() {
+  if (this.right == null) return this.value;
+  return this.right.maxValue();
+};
+📊 Ringkasan
+Node bukan hanya data, tapi juga punya method untuk operasi tree.
+
+Method utama: addNode, search, visit.
+
+Traversal bisa berbeda (in-order, pre-order, post-order).
+
+Dengan method ini, tree jadi aktif: bisa menambah, mencari, dan menampilkan data.
+
+🧩 Tahap 4: Membuat Class Tree
+1. Kenapa Perlu Class Tree?
+Node hanya tahu dirinya sendiri dan anak-anaknya.
+
+Kita butuh struktur utama yang menyimpan:
+
+Root → node pertama (puncak pohon).
+
+Method untuk menambah, mencari, dan menelusuri tree.
+
+Tree bertindak sebagai manager yang mengatur semua node.
+
+2. Constructor Tree
+js
+function Tree() {
+  this.root = null; // awalnya kosong
+}
+👉 root adalah node pertama. Jika belum ada data, root = null.
+
+3. Method pada Tree
+a. addValue(val)
+Menambahkan nilai baru ke tree.
+
+js
+Tree.prototype.addValue = function(val) {
+  let n = new Node(val);
+  if (this.root == null) {
+    this.root = n; // jika kosong, jadikan root
+  } else {
+    this.root.addNode(n); // delegasi ke Node
+  }
+};
+b. search(val)
+Mencari nilai di tree.
+
+js
+Tree.prototype.search = function(val) {
+  if (this.root != null) {
+    return this.root.search(val);
+  }
+  return null;
+};
+c. traverse()
+Menelusuri tree (in-order).
+
+js
+Tree.prototype.traverse = function() {
+  if (this.root != null) {
+    this.root.visit();
+  }
+};
+4. Contoh Penggunaan
+js
+let tree = new Tree();
+tree.addValue(10);
+tree.addValue(5);
+tree.addValue(15);
+
+tree.traverse(); 
+// Output: 5, 10, 15
+
+let result = tree.search(15);
+console.log(result); 
+// Output: Node { value: 15, left: null, right: null }
+5. Visualisasi
+Kode
+Tree (root = 10)
+       10
+      /  \
+     5    15
+addValue(10) → root = 10
+
+addValue(5) → masuk ke kiri
+
+addValue(15) → masuk ke kanan
+
+6. Latihan Soal Class Tree
+Buat method findMin() di Tree yang mencari nilai terkecil.
+
+Buat method findMax() di Tree yang mencari nilai terbesar.
+
+Buat method height() di Tree yang menghitung tinggi pohon.
+
+Buat method contains(val) yang mengembalikan true/false apakah nilai ada di tree.
+
+Buat method breadthFirst() untuk traversal level-order (pakai queue).
+
+📊 Ringkasan
+Tree adalah class utama yang menyimpan root.
+
+Method Tree biasanya hanya delegasi ke Node (addNode, search, visit).
+
+Dengan Tree, kita bisa mengelola keseluruhan struktur dengan mudah.
+
+
+🧩 Tahap 5: Integrasi dengan p5.js
+1. Peran p5.js
+p5.js menyediakan lingkungan eksekusi dengan fungsi setup() dan draw().
+
+Di contoh Shiffman, kita hanya pakai setup() karena tree tidak digambar, hanya di-log.
+
+Fungsi noCanvas() dipanggil karena kita tidak butuh canvas untuk menggambar.
+
+2. Script Integrasi
+js
+var tree;
+
+function setup() {
+  noCanvas(); // tidak perlu canvas
+  tree = new Tree(); // buat tree baru
+
+  // Tambahkan 10 angka random ke tree
+  for (var i = 0; i < 10; i++) {
+    tree.addValue(floor(random(0, 100)));
+  }
+
+  console.log(tree); // tampilkan struktur tree di console
+
+  tree.traverse(); // tampilkan semua nilai (in-order traversal)
+
+  // Coba cari angka 10
+  var result = tree.search(10);
+  if (result == null) {
+    console.log('not found');
+  } else {
+    console.log(result);
+  }
+}
+3. Langkah Eksekusi
+Inisialisasi Tree → tree = new Tree().
+
+Tambah Data Random → loop for menambahkan 10 angka acak (0–99).
+
+Log Struktur Tree → console.log(tree) menampilkan root dan anak-anak.
+
+Traversal → tree.traverse() menampilkan angka dalam urutan ascending.
+
+Search → tree.search(10) mencari angka 10, hasilnya node atau null.
+
+4. Output yang Diharapkan
+console.log(tree) → struktur tree dengan root dan cabang.
+
+tree.traverse() → angka-angka urut dari kecil ke besar.
+
+tree.search(10) → jika ada, tampilkan node; jika tidak, tampilkan 'not found'.
+
+5. Visualisasi dengan p5.js (Opsional)
+Kalau mau lebih menarik, kita bisa menggambar tree di canvas:
+
+js
+Node.prototype.draw = function(x, y, spacing) {
+  ellipse(x, y, 30, 30);
+  textAlign(CENTER);
+  text(this.value, x, y+5);
+
+  if (this.left != null) {
+    line(x, y, x - spacing, y + 50);
+    this.left.draw(x - spacing, y + 50, spacing/2);
+  }
+  if (this.right != null) {
+    line(x, y, x + spacing, y + 50);
+    this.right.draw(x + spacing, y + 50, spacing/2);
+  }
+};
+
+function draw() {
+  background(255);
+  if (tree.root != null) {
+    tree.root.draw(width/2, 50, 100);
+  }
+}
+👉 Dengan ini, siswa bisa melihat bentuk tree secara visual, bukan hanya angka di console.
+
+🎯 Latihan Integrasi
+Ubah jumlah angka random dari 10 menjadi 20, lalu lihat hasil traversal.
+
+Ganti search(10) dengan angka lain, misalnya search(50).
+
+Tambahkan method draw() seperti di atas, lalu tampilkan tree di canvas.
+
+Coba traversal lain (preOrder, postOrder) dan tampilkan hasilnya di console.
+
+Buat tombol di p5.js untuk menambah angka baru ke tree secara interaktif.
+
+📊 Ringkasan
+p5.js dipakai sebagai lingkungan eksekusi (setup/draw).
+
+Tree diisi dengan angka random, lalu ditelusuri dan dicari.
+
+Output bisa berupa console log atau visualisasi di canvas.
+
+Integrasi ini membuat konsep Binary Tree lebih hidup dan mudah dipahami siswa.
+
+🧩 Tahap 6: Memahami Output Script Akhir
+1. Struktur Script Akhir
+Script akhir terdiri dari:
+
+Class Node → menyimpan value, left, right, dan method (addNode, search, visit).
+
+Class Tree → menyimpan root dan method (addValue, search, traverse).
+
+setup() p5.js → membuat tree, menambahkan data random, menelusuri, dan mencari nilai.
+
+2. Alur Eksekusi
+tree = new Tree(); → buat tree kosong.
+
+Loop for → tambahkan 10 angka random ke tree dengan addValue().
+
+Angka pertama jadi root.
+
+Angka berikutnya ditempatkan sesuai aturan Binary Search Tree (lebih kecil ke kiri, lebih besar ke kanan).
+
+console.log(tree); → tampilkan struktur tree (root dan cabang).
+
+tree.traverse(); → jalankan traversal in-order → hasilnya angka urut dari kecil ke besar.
+
+tree.search(10); → cari angka 10:
+
+Jika ada, tampilkan node.
+
+Jika tidak ada, tampilkan 'not found'.
+
+3. Contoh Output di Console
+Misalnya angka random yang masuk: [42, 17, 88, 5, 23, 50, 99, 12, 20, 30]
+
+Struktur Tree (disederhanakan):
+
+Kode
+        42
+       /  \
+     17    88
+    / \    / \
+   5  23  50  99
+     / \
+    12  30
+       /
+      20
+Traversal (in-order):
+
+Kode
+5, 12, 17, 20, 23, 30, 42, 50, 88, 99
+Search(10):
+
+Kode
+not found
+4. Interpretasi Output
+console.log(tree) → menunjukkan struktur tree dengan root dan anak-anak.
+
+tree.traverse() → menampilkan data urut (karena in-order traversal).
+
+tree.search(10) → hasil pencarian, bisa Node { value: 10 } atau null.
+
+5. Latihan Analisis Output
+Jalankan script beberapa kali → perhatikan bagaimana angka random membentuk struktur tree berbeda.
+
+Catat hasil traverse() → selalu urut dari kecil ke besar.
+
+Coba search() dengan angka yang ada dan yang tidak ada → bandingkan hasilnya.
+
+Tambahkan angka manual (misalnya tree.addValue(10)) → lalu ulangi traverse() dan search(10).
+
+Visualisasikan tree di kertas → cocokkan dengan hasil traversal.
+
+📊 Ringkasan
+Output script akhir adalah struktur Binary Search Tree yang terbentuk dari angka random.
+
+Traversal in-order selalu menghasilkan data urut.
+
+Search mengembalikan node jika ada, atau null jika tidak ada.
+
+Dengan memahami output, kita bisa melihat bagaimana teori Binary Tree bekerja dalam praktik.
+
+
+📜 Script Akhir Binary Tree p5.js
+js
+// =====================
+// Tahap 1: Node Class
+// =====================
+function Node(val) {
+  this.value = val;
+  this.left = null;
+  this.right = null;
+}
+
+// Method search: mencari nilai di subtree
+Node.prototype.search = function(val) {
+  if (this.value == val) {
+    return this;
+  } else if (val < this.value && this.left != null) {
+    return this.left.search(val);
+  } else if (val > this.value && this.right != null) {
+    return this.right.search(val);
+  }
+  return null;
+}
+
+// Method visit: traversal in-order (kiri → root → kanan)
+Node.prototype.visit = function() {
+  if (this.left != null) {
+    this.left.visit();
+  }
+  console.log(this.value);
+  if (this.right != null) {
+    this.right.visit();
+  }
+}
+
+// Method addNode: menambahkan node baru sesuai aturan BST
+Node.prototype.addNode = function(n) {
+  if (n.value < this.value) {
+    if (this.left == null) {
+      this.left = n;
+    } else {
+      this.left.addNode(n);
+    }
+  } else if (n.value > this.value) {
+    if (this.right == null) {
+      this.right = n;
+    } else {
+      this.right.addNode(n);
+    }
+  }
+}
+
+// =====================
+// Tahap 2: Tree Class
+// =====================
+function Tree() {
+  this.root = null;
+}
+
+// Traversal seluruh tree
+Tree.prototype.traverse = function() {
+  this.root.visit();
+}
+
+// Pencarian nilai di tree
+Tree.prototype.search = function(val) {
+  var found = this.root.search(val);
+  return found;
+}
+
+// Menambahkan nilai baru ke tree
+Tree.prototype.addValue = function(val) {
+  var n = new Node(val);
+  if (this.root == null) {
+    this.root = n;
+  } else {
+    this.root.addNode(n);
+  }
+}
+
+// =====================
+// Tahap 3: Integrasi p5.js
+// =====================
+var tree;
+
+function setup() {
+  noCanvas(); // tidak perlu canvas, hanya console log
+  tree = new Tree();
+
+  // Tambahkan 10 angka random ke tree
+  for (var i = 0; i < 10; i++) {
+    tree.addValue(floor(random(0, 100)));
+  }
+
+  // Tampilkan struktur tree di console
+  console.log(tree);
+
+  // Traversal in-order → hasil urut dari kecil ke besar
+  tree.traverse();
+
+  // Coba cari angka 10
+  var result = tree.search(10);
+  if (result == null) {
+    console.log('not found');
+  } else {
+    console.log(result);
+  }
+}
+🧩 Keterangan Tahapan
+Tahap 1: Node Class
+
+Membuat unit dasar tree (Node) dengan value, left, right.
+
+Method:
+
+addNode() → menambah node baru.
+
+search() → mencari nilai.
+
+visit() → traversal in-order.
+
+Tahap 2: Tree Class
+
+Membuat class Tree sebagai wadah utama.
+
+Menyimpan root dan menyediakan method:
+
+addValue() → menambah data ke tree.
+
+search() → mencari data.
+
+traverse() → menelusuri tree.
+
+Tahap 3: Integrasi p5.js
+
+Fungsi setup() dipakai untuk inisialisasi.
+
+noCanvas() karena hanya pakai console log.
+
+Loop for menambahkan 10 angka random ke tree.
+
+console.log(tree) menampilkan struktur tree.
+
+tree.traverse() menampilkan angka urut.
+
+tree.search(10) mencari angka 10.
+
+📊 Output yang Diharapkan
+Struktur tree (root dan cabang) di console.
+
+Traversal in-order → angka urut dari kecil ke besar.
+
+Search → hasil node jika ditemukan, atau 'not found'.
